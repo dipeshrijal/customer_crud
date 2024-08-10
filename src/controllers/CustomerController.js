@@ -11,7 +11,10 @@ class CustomerController {
         return res.status(400).send(error.details);
       }
       const customer = await CustomerService.createCustomer(value);
-      logger.info("Customer created successfully:", customer);
+      logger.info(`Customer created successfully: ${JSON.stringify(customer)}`);
+
+      logger.info(`Customer created successfully:`, customer);
+
       res.status(201).send(customer);
     } catch (err) {
       logger.error("Error while creating customer", err);
@@ -68,7 +71,7 @@ class CustomerController {
     const { email } = req.params;
     try {
       const customer = await CustomerService.getCustomerByEmail(email);
-      logger.info("Customer found:", customer);
+      logger.info("Customer found:", customer.toJSON());
       res.status(200).json(customer);
     } catch (err) {
       if (err.message === "Customer not found") {

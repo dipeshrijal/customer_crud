@@ -1,53 +1,58 @@
-const winston = require("winston");
-const { format, transports } = winston;
-const redactSensitiveData = require("../utils/redact");
+const { createLogger, format, transports } = require("winston");
+const { combine, timestamp, colorize, json } = format;
+const _ = require("lodash");
 
-const redactionFormat = format((info) => {
-  // Apply redaction to the message and any additional properties
-  if (info.message) {
-    info.message = redactSensitiveData(info.message);
+const redactSensitiveInfoString = (message) => {
+  // Redact email addresses
+  message = message.replace(
+    /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
+    "[REDACTED EMAIL]"
+  );
+
+  // Redact phone numbers (This regex covers various formats)
+  message = message.replace(
+    /(\+\d{1,3}\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}/g,
+    "[REDACTED PHONE]"
+  );
+
+  return message;
+};
+
+const redactSensitiveInfoObject = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === "string") {
+      obj[key] = redactSensitiveInfoString(obj[key]);
+    } else if (typeof obj[key] === "object") {
+      obj[key] = redactSensitiveInfoObject(obj[key]);
+    }
   }
-  if (info.stack) {
-    info.stack = redactSensitiveData(info.stack);
+  return obj;
+};
+
+const redactSensitiveInfo = format((info) => {
+  const message = _.cloneDeep(info);
+
+  for (const key in message) {
+    if (typeof message[key] === "string") {
+      message[key] = redactSensitiveInfoString(message[key]);
+    } else if (typeof message[key] === "object") {
+      message[key] = redactSensitiveInfoObject(message[key]);
+    }
   }
-  if (info.meta) {
-    info.meta = redactSensitiveData(info.meta);
-  }
-  return info;
+  return message;
 });
 
-const logger = winston.createLogger({
-  level: "info", // Default log level
-  format: format.combine(
-    format.timestamp(),
-    redactionFormat(), // Apply the redaction format
-    format.json() // Ensure log messages are in JSON format
+const logger = createLogger({
+  level: "info",
+  format: combine(
+    redactSensitiveInfo(),
+    timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    json()
   ),
   transports: [
-    new transports.Console({
-      format: format.combine(
-        format.timestamp(),
-        redactionFormat(), // Apply redaction format to console logs
-        format.json() // Ensure console logs are in JSON format
-      ),
-    }),
-    new transports.File({
-      filename: "combined.log",
-      format: format.combine(
-        format.timestamp(),
-        redactionFormat(), // Apply redaction format to file logs
-        format.json() // Ensure file logs are in JSON format
-      ),
-    }),
-    new transports.File({
-      filename: "errors.log",
-      level: "error",
-      format: format.combine(
-        format.timestamp(),
-        redactionFormat(), // Apply redaction format to error logs
-        format.json() // Ensure error logs are in JSON format
-      ),
-    }),
+    new transports.Console(),
+    new transports.File({ filename: "logs/errors.log", level: "error" }),
+    new transports.File({ filename: "logs/combined.log" }),
   ],
 });
 

@@ -9,7 +9,7 @@ class CustomerService {
       logger.info("Customer saved to database:", customer);
       return customer;
     } catch (err) {
-      logger.error("Error saving customer to database:", err);
+      // logger.error("Error saving customer to database:", err);
       throw err;
     }
   }

@@ -2,10 +2,12 @@ const logger = require("../config/logger"); // Your Winston logger
 
 const errorMiddleware = (err, req, res, next) => {
   // Log the error details
-  logger.error("Unhandled error:", {
-    message: err.message,
-    stack: err.stack,
-  });
+  // logger.error("Unhandled error:", {
+  //   message: err.message,
+  //   stack: err.stack,
+  // });
+
+  logger.error(`Error: ${err.message}`, { stack: err.stack });
 
   // Determine the response status code and message
   const statusCode = err.statusCode || 500;

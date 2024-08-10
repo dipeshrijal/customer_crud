@@ -4,10 +4,12 @@ const bodyParser = require("body-parser");
 const customerRoutes = require("./routes/customerRoutes");
 const authRoutes = require("./routes/authRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
+const helmet = require("helmet");
 require("./config/db"); // Ensure database connection is established
 
 const app = express();
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use("/api", customerRoutes);
 app.use("/api/auth", authRoutes);

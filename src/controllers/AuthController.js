@@ -17,7 +17,7 @@ class AuthController {
       await user.save();
 
       const token = createToken({ id: user._id, email: user.email });
-      logger.info("User registered successfully:", { email });
+      logger.info(`User registered successfully: ${email}`);
       res.status(201).json({ token });
     } catch (err) {
       logger.error("Error registering user:", err);
@@ -41,7 +41,7 @@ class AuthController {
       }
 
       const token = createToken({ id: user._id, email: user.email });
-      logger.info("User logged in successfully:", { email });
+      logger.info(`User logged in successfully: ${email}`);
       res.status(200).json({ token });
     } catch (err) {
       logger.error("Error logging in user:", err);
