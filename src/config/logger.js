@@ -1,5 +1,5 @@
 const { createLogger, format, transports } = require("winston");
-const { combine, timestamp, colorize, json } = format;
+const { combine, timestamp, colorize, json, printf } = format;
 const _ = require("lodash");
 
 const redactSensitiveInfoString = (message) => {
@@ -18,7 +18,8 @@ const redactSensitiveInfoString = (message) => {
   return message;
 };
 
-const redactSensitiveInfoObject = (obj) => {
+const redactSensitiveInfoObject = (message) => {
+  const obj = _.cloneDeep(message);
   for (const key in obj) {
     if (typeof obj[key] === "string") {
       obj[key] = redactSensitiveInfoString(obj[key]);
@@ -29,25 +30,26 @@ const redactSensitiveInfoObject = (obj) => {
   return obj;
 };
 
-const redactSensitiveInfo = format((info) => {
-  const message = _.cloneDeep(info);
+const redactSensitiveInfo = printf(({ level, message, timestamp, ...meta }) => {
+  let logObject;
 
-  for (const key in message) {
-    if (typeof message[key] === "string") {
-      message[key] = redactSensitiveInfoString(message[key]);
-    } else if (typeof message[key] === "object") {
-      message[key] = redactSensitiveInfoObject(message[key]);
-    }
+  if (typeof message === "object") {
+    logObject = redactSensitiveInfoObject({ timestamp, level, ...message });
+  } else {
+    logObject = redactSensitiveInfoObject({ timestamp, level, message });
   }
-  return message;
+
+  // Merge any additional metadata into the log object
+  logObject = { ...logObject, ...redactSensitiveInfoObject(meta) };
+
+  return JSON.stringify(logObject);
 });
 
 const logger = createLogger({
-  level: "info",
+  level: "debug",
   format: combine(
-    redactSensitiveInfo(),
     timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-    json()
+    redactSensitiveInfo
   ),
   transports: [
     new transports.Console(),

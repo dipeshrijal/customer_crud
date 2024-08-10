@@ -11,13 +11,12 @@ class CustomerController {
         return res.status(400).send(error.details);
       }
       const customer = await CustomerService.createCustomer(value);
-      logger.info(`Customer created successfully: ${JSON.stringify(customer)}`);
 
-      logger.info(`Customer created successfully:`, customer);
-
+      logger.info(`Customer created successfully:`, customer.toJSON());
       res.status(201).send(customer);
     } catch (err) {
-      logger.error("Error while creating customer", err);
+      logger.debug("error");
+      logger.error(`Error while creating customer, ${err}`);
       if (err.code === 11000) {
         return res.status(409).send({ message: "Email already exists" });
       }

@@ -6,7 +6,7 @@ class CustomerService {
     try {
       const customer = new Customer(data);
       await customer.save();
-      logger.info("Customer saved to database:", customer);
+      logger.info("Customer saved to database:", customer.toJSON());
       return customer;
     } catch (err) {
       // logger.error("Error saving customer to database:", err);
