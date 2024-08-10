@@ -13,7 +13,6 @@ const customerSchema = new Schema(
       required: true,
       unique: true,
       lowercase: true,
-      trim: true,
     },
     phoneNumber: { type: String, required: true },
   },

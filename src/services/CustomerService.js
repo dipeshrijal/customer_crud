@@ -14,20 +14,39 @@ class CustomerService {
     }
   }
 
-  static async searchCustomersByQuery(query) {
+  static async searchCustomersByQuery(query, page = 1, limit = 10) {
     try {
       const searchCriteria = {};
 
+      const { page: queryPage, limit: queryLimit, ...filterQuery } = query;
+
       // Build dynamic query based on provided query parameters
-      Object.keys(query).forEach((key) => {
+      Object.keys(filterQuery).forEach((key) => {
         searchCriteria[key] = { $regex: query[key], $options: "i" };
       });
 
-      const customers = await Customer.find(searchCriteria);
-      logger.info("Customers retrieved successfully by query:", { query });
-      return customers;
+      const skip = (page - 1) * limit;
+
+      const customers = await Customer.find(searchCriteria)
+        .skip(skip)
+        .limit(limit);
+
+      const totalCustomers = await Customer.countDocuments(searchCriteria);
+
+      logger.info("Customers retrieved successfully with pagination:", {
+        query,
+        page,
+        limit,
+      });
+      return {
+        customers,
+        totalCustomers,
+        page,
+        limit,
+        totalPages: Math.ceil(totalCustomers / limit),
+      };
     } catch (err) {
-      logger.error("Error retrieving customers by query:", {
+      logger.error("Error retrieving customers with pagination:", {
         query,
         error: err.message,
       });
