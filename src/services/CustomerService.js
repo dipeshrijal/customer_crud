@@ -6,10 +6,10 @@ class CustomerService {
     try {
       const customer = new Customer(data);
       await customer.save();
-      logger.info("Customer saved to database:", customer.toJSON());
+      logger.debug("Customer saved to database:", customer.toJSON());
       return customer;
     } catch (err) {
-      // logger.error("Error saving customer to database:", err);
+      logger.error("Error saving customer to database:", err);
       throw err;
     }
   }
@@ -79,7 +79,6 @@ class CustomerService {
     try {
       const customer = await Customer.findById(id);
       if (!customer) {
-        logger.error("Customer not found", id);
         throw new Error("Customer not found");
       }
 

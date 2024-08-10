@@ -1,6 +1,7 @@
 const { createLogger, format, transports } = require("winston");
 const { combine, timestamp, colorize, json, printf } = format;
 const _ = require("lodash");
+require("dotenv").config();
 
 const redactSensitiveInfoString = (message) => {
   // Redact email addresses
@@ -46,7 +47,7 @@ const redactSensitiveInfo = printf(({ level, message, timestamp, ...meta }) => {
 });
 
 const logger = createLogger({
-  level: "debug",
+  level: process.env.LOG_LEVEL || "info",
   format: combine(
     timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     redactSensitiveInfo

@@ -15,8 +15,7 @@ class CustomerController {
       logger.info(`Customer created successfully:`, customer.toJSON());
       res.status(201).send(customer);
     } catch (err) {
-      logger.debug("error");
-      logger.error(`Error while creating customer, ${err}`);
+      logger.error(`Error while creating customer`, err);
       if (err.code === 11000) {
         return res.status(409).send({ message: "Email already exists" });
       }
@@ -24,20 +23,11 @@ class CustomerController {
     }
   }
 
-  static async read(req, res, next) {
-    try {
-      const customers = await CustomerService.getAllCustomers();
-      res.status(200).send(customers);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   static async readOne(req, res, next) {
     try {
       const customer = await CustomerService.getCustomerById(req.params.id);
 
-      logger.info("Customer Found!", customer);
+      logger.info("Customer Found!", customer.toJSON());
       res.status(200).send(customer);
     } catch (err) {
       if (err.message === "Customer not found") {
@@ -93,6 +83,7 @@ class CustomerController {
         value
       );
       if (!customer) {
+        logger.warn("Customer Not Found", req.params.id);
         return res.status(404).send({ message: "Customer not found!" });
       }
       res.status(200).send(customer);
@@ -109,6 +100,7 @@ class CustomerController {
     try {
       const customer = await CustomerService.deleteCustomer(req.params.id);
       if (!customer) {
+        logger.warn("Customer Not Found", req.params.id);
         return res.status(404).send({ message: "Customer Not Found!" });
       }
       res.status(200).send(customer);
