@@ -25,7 +25,7 @@ const provider = new NodeTracerProvider({
 // Configure the exporter (OTLP in this case)
 const exporter = new OTLPTraceExporter({
   // URL to the OTLP endpoint (e.g., Jaeger, Zipkin, or an observability backend)
-  url: "http://localhost:4318/v1/traces",
+  url: "http://jaeger:4318/v1/traces",
 });
 
 // Use SimpleSpanProcessor to send spans immediately

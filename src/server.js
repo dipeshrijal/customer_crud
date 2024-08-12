@@ -1,6 +1,8 @@
 require("elastic-apm-node").start({
   serviceName: "customer_crud",
-  serverUrl: "http://localhost:8200",
+  secretToken: "ySuS71oPlsLzuDn74F",
+  serverUrl:
+    "https://437d792d87804c9a8d1d2998e51bef07.apm.us-central1.gcp.cloud.es.io:443",
   environment: "development",
   captureBody: "errors", // Redact request bodies unless capturing for error events
   captureHeaders: false, // Disable capturing headers to avoid sending sensitive info
