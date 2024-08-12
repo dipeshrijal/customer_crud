@@ -59,7 +59,7 @@ const logger = createLogger({
     new transports.File({ filename: "logs/errors.log", level: "error" }),
     new transports.File({ filename: "logs/combined.log" }),
     // new LogstashTransport({
-    //   port: 5000,
+    //   port: 6001,
     //   node_name: "local",
     //   host: "localhost",
     // }),
