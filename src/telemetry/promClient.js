@@ -1,7 +1,5 @@
-// metrics.js
 const promClient = require("prom-client");
 
-// Prometheus metrics setup
 const collectDefaultMetrics = promClient.collectDefaultMetrics;
 collectDefaultMetrics({ timeout: 5000 });
 

@@ -7,6 +7,9 @@ yarn-error.log
 # Docker-specific files
 Dockerfile
 docker-compose.yml
+elk
+helm
+migrations
 
 # Logs
 logs

@@ -6,13 +6,11 @@ const _ = require("lodash");
 require("dotenv").config();
 
 const redactSensitiveInfoString = (message) => {
-  // Redact email addresses
   message = message.replace(
     /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
     "[REDACTED EMAIL]"
   );
 
-  // Redact phone numbers (This regex covers various formats)
   message = message.replace(
     /(\+\d{1,3}\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}/g,
     "[REDACTED PHONE]"
@@ -42,7 +40,6 @@ const redactSensitiveInfo = printf(({ level, message, timestamp, ...meta }) => {
     logObject = redactSensitiveInfoObject({ timestamp, level, message });
   }
 
-  // Merge any additional metadata into the log object
   logObject = { ...logObject, ...redactSensitiveInfoObject(meta) };
 
   return JSON.stringify(logObject);

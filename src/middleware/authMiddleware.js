@@ -11,7 +11,7 @@ const authMiddleware = (req, res, next) => {
   const token = authHeader.split(" ")[1];
   try {
     const decoded = verifyToken(token);
-    req.user = decoded; // Add user data to the request object
+    req.user = decoded;
     next();
   } catch (err) {
     logger.error("Invalid token", err);
