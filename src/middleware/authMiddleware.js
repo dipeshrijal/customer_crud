@@ -1,5 +1,5 @@
 const { verifyToken } = require("../utils/jwt");
-const logger = require("../config/logger");
+const logger = require("../utils/logger");
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;

@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const { createToken } = require("../utils/jwt");
-const logger = require("../config/logger");
+const logger = require("../utils/logger");
 
 class AuthController {
   static async register(req, res) {

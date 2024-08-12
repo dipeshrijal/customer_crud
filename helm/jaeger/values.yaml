@@ -1,0 +1,34 @@
+replicaCount: 1
+
+image:
+  repository: jaegertracing/all-in-one
+  tag: "1.45"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 16686
+  targetPort: 16686
+  name: jaeger-ui
+
+ports:
+  - name: "udp-trace"
+    port: 6831
+    targetPort: 6831
+    protocol: UDP
+  - name: "otlp-http"
+    port: 4318
+    targetPort: 4318
+  - name: "otlp"
+    port: 14250
+    targetPort: 14250
+
+env:
+  - name: COLLECTOR_ZIPKIN_HTTP_PORT
+    value: "9411"
+  - name: COLLECTOR_OTLP_ENABLED
+    value: "true"
+  - name: COLLECTOR_OTLP_HTTP_PORT
+    value: "4318"
+
+resources: {}

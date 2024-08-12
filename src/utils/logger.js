@@ -1,5 +1,7 @@
 const { createLogger, format, transports } = require("winston");
 const { combine, timestamp, colorize, json, printf } = format;
+const LogstashTransport = require("winston-logstash/lib/winston-logstash-latest");
+
 const _ = require("lodash");
 require("dotenv").config();
 
@@ -56,6 +58,11 @@ const logger = createLogger({
     new transports.Console(),
     new transports.File({ filename: "logs/errors.log", level: "error" }),
     new transports.File({ filename: "logs/combined.log" }),
+    // new LogstashTransport({
+    //   port: 6001,
+    //   node_name: "local",
+    //   host: "localhost",
+    // }),
   ],
 });
 

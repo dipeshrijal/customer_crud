@@ -1,6 +1,6 @@
 const { customerSchema } = require("../validators/customerValidator");
-const logger = require("../config/logger");
-const CustomerService = require("../services/customerService");
+const logger = require("../utils/logger");
+const CustomerService = require("../services/CustomerService");
 const AppError = require("../utils/AppError");
 
 class CustomerController {
