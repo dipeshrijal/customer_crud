@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "node src/server.js",
     "seed": "node migrations/seed.js"
   },
   "keywords": [],
@@ -27,7 +27,6 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^8.5.2",
-    "prom-client": "^15.1.3",
     "winston": "^3.14.1",
     "winston-logstash": "^1.2.1"
   },
