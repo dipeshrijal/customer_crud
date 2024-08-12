@@ -9,7 +9,6 @@ require("elastic-apm-node").start({
 });
 
 require("./telemetry/otel");
-
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -19,46 +18,17 @@ const errorMiddleware = require("./middleware/errorMiddleware");
 const helmet = require("helmet");
 const logger = require("./utils/logger");
 require("./config/db"); // Ensure database connection is established
-const promClient = require("prom-client");
 const app = express();
 
-// Prometheus metrics setup
-const collectDefaultMetrics = promClient.collectDefaultMetrics;
-collectDefaultMetrics({ timeout: 5000 });
+const {
+  metricsMiddleware,
+  metricsEndpointHandler,
+} = require("./telemetry/promClient");
 
-const requestCounter = new promClient.Counter({
-  name: "http_requests_total",
-  help: "Total number of HTTP requests",
-  labelNames: ["method", "route", "code"],
-});
-
-const requestDuration = new promClient.Histogram({
-  name: "http_request_duration_seconds",
-  help: "Histogram of HTTP request duration",
-  labelNames: ["method", "route"],
-});
-
-app.get("/metrics", async (req, res) => {
-  res.set("Content-Type", promClient.register.contentType);
-  res.end(await promClient.register.metrics());
-});
-
-// Middleware to track metrics
-app.use((req, res, next) => {
-  const end = requestDuration.startTimer();
-  res.on("finish", () => {
-    requestCounter.inc({
-      method: req.method,
-      route: req.route ? req.route.path : req.url,
-      code: res.statusCode,
-    });
-    end({ method: req.method, route: req.route ? req.route.path : req.url });
-  });
-  next();
-});
-
+app.use(metricsMiddleware);
 app.use(helmet());
 app.use(bodyParser.json());
+app.get("/metrics", metricsEndpointHandler);
 app.use("/api", customerRoutes);
 app.use("/api/auth", authRoutes);
 

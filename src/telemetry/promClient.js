@@ -1,41 +1,41 @@
-const client = require("prom-client");
+// metrics.js
+const promClient = require("prom-client");
 
-// Create a Registry to register the metrics
-const register = new client.Registry();
+// Prometheus metrics setup
+const collectDefaultMetrics = promClient.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
 
-// Collect default metrics
-client.collectDefaultMetrics({ register });
-
-// Create a custom Histogram metric
-const httpRequestDurationMilliseconds = new client.Histogram({
-  name: "http_request_duration_ms",
-  help: "Duration of HTTP requests in ms",
-  labelNames: ["method", "route", "status_code"],
-  buckets: [50, 100, 300, 500, 1000, 3000],
+const requestCounter = new promClient.Counter({
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "code"],
 });
 
-register.registerMetric(httpRequestDurationMilliseconds);
+const requestDuration = new promClient.Histogram({
+  name: "http_request_duration_seconds",
+  help: "Histogram of HTTP request duration",
+  labelNames: ["method", "route"],
+});
 
-// Middleware to track request duration
-function metricsMiddleware(req, res, next) {
-  const end = httpRequestDurationMilliseconds.startTimer();
+const metricsMiddleware = (req, res, next) => {
+  const end = requestDuration.startTimer();
   res.on("finish", () => {
-    end({
+    requestCounter.inc({
       method: req.method,
-      route: req.route ? req.route.path : req.path,
-      status_code: res.statusCode,
+      route: req.route ? req.route.path : req.url,
+      code: res.statusCode,
     });
+    end({ method: req.method, route: req.route ? req.route.path : req.url });
   });
   next();
-}
+};
 
-// Endpoint to expose metrics
-function metricsEndpoint(req, res) {
-  res.set("Content-Type", register.contentType);
-  res.end(register.metrics());
-}
+const metricsEndpointHandler = async (req, res) => {
+  res.set("Content-Type", promClient.register.contentType);
+  res.end(await promClient.register.metrics());
+};
 
 module.exports = {
   metricsMiddleware,
-  metricsEndpoint,
+  metricsEndpointHandler,
 };
