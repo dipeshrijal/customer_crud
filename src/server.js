@@ -4,8 +4,8 @@ require("elastic-apm-node").start({
   serverUrl:
     "https://437d792d87804c9a8d1d2998e51bef07.apm.us-central1.gcp.cloud.es.io:443",
   environment: "development",
-  captureBody: "errors", // Redact request bodies unless capturing for error events
-  captureHeaders: false, // Disable capturing headers to avoid sending sensitive info
+  captureBody: "errors",
+  captureHeaders: false,
 });
 
 require("./telemetry/otel");
@@ -17,7 +17,7 @@ const authRoutes = require("./routes/authRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const helmet = require("helmet");
 const logger = require("./utils/logger");
-require("./config/db"); // Ensure database connection is established
+require("./config/db");
 const app = express();
 
 const {

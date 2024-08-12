@@ -8,8 +8,8 @@ const connectWithRetry = () => {
   mongoose
     .connect(mongoURI, {
       serverApi: { version: "1", strict: true, deprecationErrors: true },
-      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     })
     .then(() => {
       logger.info("Connected to MongoDB");
