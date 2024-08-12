@@ -1,4 +1,4 @@
-const logger = require("../config/logger"); // Your Winston logger
+const logger = require("../utils/logger"); // Your Winston logger
 
 const errorMiddleware = (err, req, res, next) => {
   // Log the error details

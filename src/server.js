@@ -1,4 +1,4 @@
-var apm = require("elastic-apm-node").start({
+require("elastic-apm-node").start({
   serviceName: "customer_crud",
   serverUrl: "http://localhost:8200",
   environment: "development",
@@ -15,10 +15,8 @@ const customerRoutes = require("./routes/customerRoutes");
 const authRoutes = require("./routes/authRoutes");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const helmet = require("helmet");
-const logger = require("./config/logger");
+const logger = require("./utils/logger");
 require("./config/db"); // Ensure database connection is established
-
-// Your application code here
 
 const app = express();
 
@@ -29,5 +27,5 @@ app.use("/api/auth", authRoutes);
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT || "3000", () => {
-  console.log(`Server running on http://localhost:${process.env.PORT || 3000}`);
+  logger.info(`Server running on http://localhost:${process.env.PORT || 3000}`);
 });

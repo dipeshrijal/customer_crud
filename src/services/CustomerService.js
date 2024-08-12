@@ -1,5 +1,5 @@
 const Customer = require("../models/Customer");
-const logger = require("../config/logger");
+const logger = require("../utils/logger");
 
 class CustomerService {
   static async createCustomer(data) {
