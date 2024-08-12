@@ -6,6 +6,8 @@ var apm = require("elastic-apm-node").start({
   captureHeaders: false, // Disable capturing headers to avoid sending sensitive info
 });
 
+require("./telemetry/otel");
+
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
