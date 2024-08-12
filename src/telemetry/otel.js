@@ -18,7 +18,7 @@ const { trace } = require("@opentelemetry/api");
 // Initialize the NodeTracerProvider with a service name
 const provider = new NodeTracerProvider({
   resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: "customer_crud", // Replace with your service name
+    [SEMRESATTRS_SERVICE_NAME]: "customer_crud", // Replace with your service name
   }),
 });
 
