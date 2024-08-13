@@ -107,4 +107,4 @@ curl --location 'http://127.0.0.1:3000/api/customers' \
 
 ## Endpoints
 
-A list of all available endpoints is provided in `Vertex.postman_collection.json`. Run the "Get Token" route first to store the JWT token as a global variable, which can be used in subsequent routes without copying it.
+A list of all available endpoints is provided in `customer_crud.postman_collection.json`. Run the "Get Token" route first to store the JWT token as a global variable, which can be used in subsequent routes without copying it.
