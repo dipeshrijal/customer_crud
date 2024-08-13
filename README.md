@@ -116,6 +116,8 @@ cd helm
 
 ```bash
 helm package customer-crud
+```
+```bash
 helm install customer-crud customer_crud-0.1.0.tgz
 ```
 
