@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "6b6a9d28-964a-4170-9563-10beb66ff6ab",
+		"name": "Vertex",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4230541"
+	},
+	"item": [
+		{
+			"name": "INSERT_CUSTOMER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"prefix\": \"Mr.\",\n    \"surname\": \"John\",\n    \"middleName\": \"Michael\",\n    \"familyName\": \"Doe\",\n    \"suffix\": \"Jr.\",\n    \"email\": \"johh.doe@gmail.com\",\n    \"phoneNumber\": \"123-456-7890\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/customers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE_CUSTOMER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"prefix\": \"Mr.\",\n  \"surname\": \"John\",\n  \"middleName\": \"Henry\",\n  \"familyName\": \"Doe\",\n  \"suffix\": \"Jr.\",\n  \"email\": \"john.doe@gmadil.com\",\n  \"phoneNumber\": \"123-456-7890\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/customers/66b6e6eeddb76a49ad6c3353",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						"66b6e6eeddb76a49ad6c3353"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_CUSTOMER_BY_EMAIL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/customers/email/john.doe@gmail.com",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						"email",
+						"john.doe@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_CUSTOMER_BY_ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/customers/66b7aa5c80f4d9f77234b748",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						"66b7aa5c80f4d9f77234b748"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_CUSTOMER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"prefix\": \"Mr.\",\n  \"surname\": \"John\",\n  \"middleName\": \"\",\n  \"familyName\": \"Doe\",\n  \"suffix\": \"Jr.\",\n  \"email\": \"john.doe@gmail.com\",\n  \"phoneNumber\": \"123-456-7890\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/customers/66b6e61ba97efe84bf9d9fca",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers",
+						"66b6e61ba97efe84bf9d9fca"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_CUSTOMERS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/customers",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_CUSTOMER_BY_QUERY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/customers?limit=5&page=2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"customers"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REGISTER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"hello@gmail.com\",\n    \"password\": \"admin\",\n    \"fullName\": \"John Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_TOKEN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.globals.set(\"token\", jsonData.token);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
