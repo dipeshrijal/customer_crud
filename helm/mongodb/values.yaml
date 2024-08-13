@@ -12,7 +12,7 @@ service:
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 1Gi
 
 resources: {}
 
