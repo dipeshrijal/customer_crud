@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: dipeshrijal/customer_curd
+  repository: local-registry-local-registry:5000/customer_crud
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v11"
+  tag: "v1"
 
 imagePullSecrets: []
 nameOverride: ""
