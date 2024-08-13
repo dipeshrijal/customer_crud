@@ -129,9 +129,10 @@ Populate your MongoDB database with initial data:
 
 ```bash
 cd ..
+```
+```bash
 npm run seed
 ```
-
 ---
 
 ## Step 7: Access the Application
