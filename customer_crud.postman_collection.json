@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "6b6a9d28-964a-4170-9563-10beb66ff6ab",
-		"name": "Vertex",
+		"name": "customer_crud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "4230541"
 	},
@@ -97,7 +97,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/api/customers/email/john.doe@gmail.com",
+					"raw": "{{url}}/api/customers/email/john.doe@email.com",
 					"host": [
 						"{{url}}"
 					],
@@ -105,7 +105,7 @@
 						"api",
 						"customers",
 						"email",
-						"john.doe@gmail.com"
+						"john.doe@email.com"
 					]
 				}
 			},
@@ -127,14 +127,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/api/customers/66b7aa5c80f4d9f77234b748",
+					"raw": "{{url}}/api/customers/66bab577c0f1c883fda3944b",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"api",
 						"customers",
-						"66b7aa5c80f4d9f77234b748"
+						"66bab577c0f1c883fda3944b"
 					]
 				}
 			},

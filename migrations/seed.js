@@ -27,6 +27,19 @@ const seedCustomers = async () => {
       customers.push(customer);
     }
 
+    const customer = {
+      _id: "66bab577c0f1c883fda3944b",
+      prefix: "Mr.",
+      suffix: "I",
+      surname: "Joe",
+      middleName: "Sidney",
+      familyName: "Windler",
+      email: "john.doe@email.com",
+      phoneNumber: "888-525-222",
+    };
+
+    customers.push(customer);
+
     await Customer.insertMany(customers);
     console.log("Customers seeded successfully");
 
