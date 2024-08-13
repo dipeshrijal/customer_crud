@@ -97,6 +97,7 @@ echo "127.0.0.1   local-registry-local-registry" | sudo tee -a /etc/hosts
 Build your Docker image and push it to the local registry:
 
 ```bash
+cd ..
 docker build -t local-registry-local-registry:5000/customer_crud:v1 .
 docker push local-registry-local-registry:5000/customer_crud:v1
 ```
