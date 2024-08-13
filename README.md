@@ -94,10 +94,14 @@ echo "127.0.0.1   local-registry-local-registry" | sudo tee -a /etc/hosts
 
 ### 5.2 Build and Push Docker Image
 
+Naviage to home directory
+```bash
+cd ..
+```
+
 Build your Docker image and push it to the local registry:
 
 ```bash
-cd ..
 docker build -t local-registry-local-registry:5000/customer_crud:v1 .
 docker push local-registry-local-registry:5000/customer_crud:v1
 ```
@@ -108,6 +112,9 @@ Navigate back to the Helm directory and deploy the application using the Helm ch
 
 ```bash
 cd helm
+```
+
+```bash
 helm package customer_crud
 helm install customer_crud customer_crud-0.1.0.tgz
 ```
