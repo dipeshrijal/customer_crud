@@ -35,7 +35,7 @@ minikube dashboard
 Clone the repository containing the project:
 
 ```bash
-git clone git@github.com:dipeshrijal/customer_crud.git
+git clone https://github.com/dipeshrijal/customer_crud.git
 ```
 
 Navigate into the project directory:
@@ -95,6 +95,7 @@ echo "127.0.0.1   local-registry-local-registry" | sudo tee -a /etc/hosts
 ### 5.2 Build and Push Docker Image
 
 Naviage to home directory
+
 ```bash
 cd ..
 ```
@@ -128,6 +129,7 @@ Populate your MongoDB database with initial data:
 ```bash
 cd ..
 ```
+
 ```bash
 npm install
 ```
@@ -135,6 +137,7 @@ npm install
 ```bash
 npm run seed
 ```
+
 ---
 
 ## Step 7: Access the Application
